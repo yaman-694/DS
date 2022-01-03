@@ -30,7 +30,7 @@ void  insert(Node *& head,int data)
     
 }
 
-void display(Node*& head)
+void display(Node* head)
 {
     Node*temp=head;
     while(temp!=NULL)
