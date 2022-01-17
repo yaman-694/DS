@@ -20,6 +20,7 @@ class Solution{
             {
                 next_ind++;
             }
+            next_ind-=1;
             cout<<arr[next_ind]<<endl;
             if(arr[next_ind]==0)
             {
