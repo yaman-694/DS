@@ -1,52 +1,37 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-    int search(vector<int>& nums, int target) {
-        int l = 0;int h = nums.size()-1;
-        int mid = (l+h)/2;
-        int small = 0;
-        while(true)
-        {
-            mid=(l+h)/2;
-            if(nums[mid]>nums[mid+1])
-            {
-                small = mid+1;
-                break;
-            }
-            else if(nums[mid]<nums[mid-1])
-            {
-                small=mid;
-                break;
-            }
-            l=mid+1;
-            
+class Solution {
+public:
+    int search(vector<int> &A, int target) {
+        int n = A.size();
+        int lo=0,hi=n-1;
+        // find the index of the smallest value using binary search.
+        // Loop will terminate since mid < hi, and lo or hi will shrink by at least 1.
+        // Proof by contradiction that mid < hi: if mid==hi, then lo==hi and loop would have been terminated.
+        while(lo<hi){
+            int mid=(lo+hi)/2;
+            if(A[mid]>A[hi]) lo=mid+1;
+            else hi=mid;
         }
-        
-        if(target>nums[0])
-        {
-            l=0;h=small-1;
+        // lo==hi is the index of the smallest value and also the number of places rotated.
+        int rot=lo;
+        lo=0;hi=n-1;
+        // The usual binary search and accounting for rotation.
+        while(lo<=hi){
+            int mid=(lo+hi)/2;
+            int realmid=(mid+rot)%n;
+            if(A[realmid]==target)return realmid;
+            if(A[realmid]<target)lo=mid+1;
+            else hi=mid-1;
         }
-        else
-        {
-            l=small;h=nums.size()-1;
-        }
-        int ans=-1;
-        int rot = small;
-        while(l<=h)
-        {
-            int mid=(small+h)/2;
-            int realmid=(mid+rot)%nums.size();
-            if(nums[realmid]==target)return realmid;
-            if(nums[realmid]<target)small=mid+1;
-            else h=mid-1;
-        }
-        return ans;
-
+        return -1;
     }
+};
 int main()
 {
+    Solution s1;
 
-    vector<int> a = {1,3};
-    cout<<search(a,0);
+    vector<int> a = {4,5,6,7,0,1,2,3};
+    cout<<s1.search(a,0);
 return 0;
 }
