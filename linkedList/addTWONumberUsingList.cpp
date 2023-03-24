@@ -61,7 +61,7 @@ struct Node {
 class Solution
 {
 public:
-    void reverse(struct Node *&head)
+    void reverse(Node*&head)
     {
         Node *curr = head;
         Node *prev = NULL, *Next = head;

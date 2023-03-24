@@ -1,0 +1,107 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        Node* temp = head;
+        Node* dub = new Node(-1);
+        unordered_map<Node*,Node*> m;
+        Node* dubtemp = dub;
+        while(temp!=NULL){
+            int data = temp->val;
+            Node* p = new Node(data);
+            dubtemp->next=p;
+            m[temp]=p;
+            dubtemp=dubtemp->next;
+            temp=temp->next;
+        }   
+
+        temp=head;
+        dubtemp=dub->next;
+        while(temp!=NULL){
+            dubtemp->random = m[temp->random];
+            dubtemp = dubtemp->next;
+            temp=temp->next;
+        }
+        return dub->next;
+        //appraoch 3 zigzap pattern
+
+        temp = head;
+        
+        dubtemp = dub->next;
+        dub->next = NULL;
+        dub = dubtemp;
+        Node* nextt=NULL,*next1=NULL;
+        while(temp!=NULL){
+            nextt = temp->next;
+            temp->next=dubtemp;
+            next1=dubtemp;
+            dubtemp->next=nextt;
+            temp=nextt;
+            dubtemp=next1;
+        }
+        temp=head;
+
+        while(temp!=head){
+            temp->next->random=temp->random->next;
+            temp=temp->next->next;
+        }
+
+        dubtemp=head->next;
+        
+        while(dubtemp!=NULL){
+            dubtemp->next = dubtemp->next->next;
+            dubtemp=dubtemp->next;
+        }
+        return dub;
+        // temp=head;
+        // dubtemp=dub->next;
+        // // return head;
+        // while(temp!=NULL){
+        //     Node* inside = head;
+        //     int i=0;
+        //     // dubtemp=dub->next;
+        //     if(temp->random==NULL){
+        //         dubtemp->random=NULL;
+        //         // cout<<1;
+        //     }
+        //     else{
+
+        //     while(inside!=temp->random){
+        //         inside=inside->next;
+        //         i++;
+        //     }
+        //     Node* dubinside = dub->next;
+        //     while(i--){
+        //         dubinside=dubinside->next;
+        //     }
+        //     dubtemp->random=dubinside;
+        //     // cout<<"dubinside "<<dubinside<<dubtemp->random<<" ";
+        //     }
+        //     dubtemp=dubtemp->next;
+        //     temp=temp->next;
+
+        // }
+        
+        // while(dubtemp!=NULL){
+        //     cout<<dubtemp->val<<" \n";
+        //     dubtemp=dubtemp->next;
+        // }
+
+        // return dub->next;
+    }
+};

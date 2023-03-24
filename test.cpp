@@ -1,42 +1,14 @@
-#include <bits/stdc++.h>
+// program named mainreturn.c
+#include<bits/stdc++.h>
 using namespace std;
-#define ll long long int
 
-int main()
+// defining main with arguments
+int main(int argc, char* argv[])
 {
-	int contributer, project;
-	cin >> contributer >> project;
-	int i = 0;
-	std::vector<string> names;
-	std::vector<string> skillvec;
-	while (i < contributer)
-	{
-		string name;
-		cin >> name;
-		names.push_back(name);
-		cout << name << " ";
-		int skills;
-		cin >> skills;
-
-		string setOfskills = "";
-
-		while (skills--)
-		{
-			string skill;
-			cin >> skill;
-			int level;
-			cin >> level;
-			setOfskills += skill;
-			setOfskills += " ";
-			setOfskills += (level + '0');
-			setOfskills += " ";
-		}
-		skillvec.push_back(setOfskills);
-		i++;
+	printf("You have entered %d arguments:\n", argc);
+    cout<<"- " << argv[0];
+	for (int i = 0; i < argc; i++) {
+		printf("%s\n", argv[i]);
 	}
-
-	for (auto i : skillvec)
-		cout << i << " ";
-
 	return 0;
 }

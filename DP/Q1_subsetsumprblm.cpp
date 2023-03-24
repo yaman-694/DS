@@ -9,7 +9,7 @@ bool subset(vector<int> arr,int sum)
     {
         for(int j = 0 ; j <sum+1;j++)
         {
-        if(i==0) t[i][j]=false;
+            if(i==0) t[i][j]=false;
             if(j==0) t[i][j]=true;
         }
     }
