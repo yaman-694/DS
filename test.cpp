@@ -1,14 +1,18 @@
-// program named mainreturn.c
-#include<bits/stdc++.h>
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
 using namespace std;
+int main() {
+    vector<int> ans;
+    cout<<ans.capacity()<<endl;;
+    ans.push_back(3);
+    ans.push_back(3);
+    ans.push_back(3);
+    ans.push_back(3);
+    ans.push_back(3);
+    ans.push_back(3);
+    cout<<ans.capacity()<<" "<<ans.size()<<endl;
+    ans.erase(ans.begin(),ans.begin()+1);
+    cout<<ans.capacity()<<" "<<ans.size()<<endl;
 
-// defining main with arguments
-int main(int argc, char* argv[])
-{
-	printf("You have entered %d arguments:\n", argc);
-    cout<<"- " << argv[0];
-	for (int i = 0; i < argc; i++) {
-		printf("%s\n", argv[i]);
-	}
-	return 0;
+    return 0;
 }

@@ -1,11 +1,9 @@
-#include <stdlib.h>
-struct emp {
-    int a;
-    int b;
-    void set(int a){
-        a=a
-    }
-}
-int main(){
-    
+#include <stdio.h>
+
+int main() {
+    // Write C code here
+    int c, a=2534;
+    printf("%d",printf("%d",a));
+    // printf("\n%d",c);
+    return 0;
 }
