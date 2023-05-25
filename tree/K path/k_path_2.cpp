@@ -12,8 +12,8 @@
 class Solution {
 public:
 vector<vector<int>> ans;
-    void solve(TreeNode* root, int k, int &sum, vector<int> &path){
-        if(root==NULL){
+    void solve(TreeNode* root, int k, int &sum, vector<int> &path) {
+        if(root==NULL) {
             return;
         }
 
@@ -31,7 +31,7 @@ vector<vector<int>> ans;
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         int sum = 0;
         vector<int> path;
-        solve(root,targetSum, sum, path);
+        solve(root, targetSum, sum, path);
         return ans;
     }
 };
