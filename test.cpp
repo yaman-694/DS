@@ -1,9 +1,35 @@
-#include <stdio.h>
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode {
+    public:
+    int data;
+    TreeNode *firstChild;
+    TreeNode *nextSibling;
 
-int main() {
-    // Write C code here
-    int c, a=2534;
-    printf("%d",printf("%d",a));
-    // printf("\n%d",c);
-    return 0;
+    TreeNode() : {
+        firstChild = NULL;
+        nextSibling = NULL;
+    }
+};
+
+class TreeNode {
+    public: 
+    int data;
+    TreeNode* firstChild;
+    TreeNode* secondChild;
+    TreeNode* thirdChild;
+    TreeNode* fourthChild;
+
+    TreeNode(){
+        firstChild = NULL;
+        secondChild = NULL;
+        thirdChild = NULL;
+        fourthChild = NULL;
+    }
+};
+class TreeNode {
+    public: 
+    int data;
+    vector<TreeNode*> children;
+    TreeNode(int val) : data(val) {}
 }
