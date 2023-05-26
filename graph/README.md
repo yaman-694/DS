@@ -1,3 +1,3 @@
 # Graph
 
-- [Path With Minimum Effort] (/minimul_efforts.cpp)
+- [Path With Minimum Effort](/minimul_efforts.cpp)
