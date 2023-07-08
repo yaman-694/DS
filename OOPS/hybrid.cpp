@@ -18,7 +18,6 @@ class last : public de1, de2 {
     int e;
     void display() {
         cout<<a<<" "<<c<<" "<<e<<" "<<d<<endl;
-
     }
 };
 

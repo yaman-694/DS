@@ -52,6 +52,7 @@ public:
         int size = balance(s, end + 1);
         cout<<"size = "<<size<<endl;
         // s = s.subst
+        
         root->left = solve(s, start+1, end - 1);
         root->right = solve(s, end + 2, size-1);
         return root;

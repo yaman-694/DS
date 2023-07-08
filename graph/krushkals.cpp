@@ -7,13 +7,15 @@ using namespace std;
 
 class disjoint{
 public:
-vector<int> parent, rank;
+vector<int> parent, rank, size;
 
 disjoint(int V){
     parent.resize(V+1);
     rank.resize(V+1,0);
+    size.resize(V+1);
     for(int i= 0;i<V;i++){
         parent[i] = i;
+        size[i] = 1;
     }
 }
 int find(int x){
@@ -36,6 +38,19 @@ void unionByRank(int x,int y){
         parent[y_rep] = x_rep;
     } else {
         parent[x_rep] = y_rep; rank[y_rep]++;
+    }
+}
+void unionBySize(int u,int v){
+    int ulp_u = find(u);
+    int ulp_v = find(v);
+    if(ulp_u == ulp_v) return;
+
+    if(size[ulp_u]<size[ulp_v]){
+        parent[ulp_u] = ulp_v;
+        size[ulp_v] += size[ulp_u];
+    } else {
+        parent[ulp_v] = ulp_u;
+        size[ulp_u] += size[ulp_v];
     }
 }
 };

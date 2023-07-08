@@ -9,47 +9,52 @@ using namespace std;
 
 class Solution{
     public:
-    bool dfs(unordered_map<int,bool> &visited, vector<int> *adj, int node, stack<int> &topo){
+    bool dfs(unordered_map<int, bool> &visited, unordered_map<int, list<int>> adj, int node, vector<char> &topo) {
         visited[node] = 1;
-        
-        for(auto i : adj[node]){
-            if(!visited[i]){
-                dfs(visited,adj, i, topo);
+
+        for(auto neigh : adj[node]){
+            if(!visited[neigh]){
+                dfs(visited,adj,neigh,topo);
             }
         }
-        topo.push(node);
+        topo.emplace_back(node+'a');
     }
     string findOrder(string dict[], int N, int K) {
         //code here
-        vector<int> adj[K];
-        
-        for(int i = 0;i<N-1;i++){
-            string one = dict[i];
-            string two = dict[i+1];
-            
-            int len = min(one.size(), two.size());
-            for(int j = 0;j<len;j++){
-                if(one[j]!=two[j]){
-                    adj[one[j]-'a'].push_back(two[j]-'a');
+        unordered_map<int,list<int>> adj;
+
+        for(int i = 0; i<N-1 ;i++){
+            string first = dict[i];
+            string second = dict[i+1];
+            int len = min(first.size(),second.size());
+            int index = 0;
+            while(index<len){
+                if(first[index] != second[index]) {
+                    adj[first[index]-'a'].push_back(second[index]-'a');
                     break;
-                } 
+                }
+                index++;
             }
         }
-        unordered_map<int,bool> visited;
-        stack<int> topo;
+
+        vector<char> topo;
+        unordered_map<int, bool> visited;
+
         for(int i = 0;i<K;i++){
             if(!visited[i]){
-                dfs(visited, adj, i, topo);
+                dfs(visited,adj,i,topo);
             }
         }
-        
+
         string ans;
-        
-        while(!topo.empty()){
-            ans.push_back(topo.top()+'a');
-            topo.pop();
+        for(int i = 0; i<K;i++){
+            ans.push_back(topo[i]);
         }
+
+        reverse(ans.begin(), ans.end());
+
         return ans;
+
     }
 };
 

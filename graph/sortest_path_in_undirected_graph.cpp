@@ -6,7 +6,7 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
 
 	unordered_map<int,bool> visited;
 	unordered_map<int,int> parent;
-
+	//create adj
 	for(int i = 0;i<m;i++){
 		int u = edges[i].first;
 		int v = edges[i].second;
@@ -17,7 +17,7 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
 
 	queue<int> q;
 	q.push(s);
-
+	// initialize
 	parent[s] = -1;
 	visited[s] = 1;
 
@@ -34,6 +34,7 @@ vector<int> shortestPath( vector<pair<int,int>> edges , int n , int m, int s , i
 			}
 		}
 	}
+	// now we will initialize start with our dest
 	int start = t;
 	vector<int> ans;
 	ans.push_back(start);
