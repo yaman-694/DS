@@ -2,6 +2,12 @@
 
 
 ## DFS
+- [Topological Sort]()
+- [Find connected Components]()
+- [Find Articulation Point]
+- [Find the strong components]
+- [solving problem such as maze]
+- [Detect Cycle in a directed graph](cycle_in_directed.cpp)
 - [Shorest path in weighted directed graph](shortest_path_in_weighted_graph.cpp)
     - First find the topological sort
     - We will have linear ordering

@@ -13,10 +13,9 @@ class A {
 };
 
 int main(){
-    int n = 9;
-    float i =4.4;
-    int sa = int(n/i)*i;
-    cout<<sa<<endl;
+    int b = 3;
+    int a = ++b + (5*b++);
+    cout<<a<<endl;
 
     // int s = int() ((i/sqrt(n))*sqrt(n));
     // cout<<sizeof(int((i/sqrt(n))*sqrt(n)));
