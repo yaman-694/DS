@@ -19,8 +19,7 @@ public:
                     isPrime[j] = false;
                 }
             }
-        }
-            
+        }   
     }
     vector<vector<int>> findPrimePairs(int n) {
         vector<vector<int>> ans;

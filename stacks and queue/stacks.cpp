@@ -24,11 +24,12 @@ class stacks
     void Delete()
     {
         if(r==-1)
-        {cout<<"Stack is empty"<<endl;
-        return;}
+        {
+            cout<<"Stack is empty"<<endl;
+        return;
+        }
         else{
             r--;
-
         }
     }
 
