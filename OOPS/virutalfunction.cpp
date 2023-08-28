@@ -3,9 +3,7 @@ using namespace std;
 
 class A {
     public: 
-    virtual void f1() {
-        cout<<"Backe";
-    }
+    virtual void f1()=0;
 };
 class B: public A{
     public:

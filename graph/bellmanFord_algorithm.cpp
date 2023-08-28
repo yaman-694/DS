@@ -1,5 +1,5 @@
 // n*m time
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
 int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
     // Write your code here.
 

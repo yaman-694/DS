@@ -14,7 +14,7 @@ using namespace std;
 //  */
 class Solution {
 public:
-    TreeNode* generateTree(vector<int>& preo, vector<int>& ino, int &i,int s, int e){
+    TreeNode* generateTree(vector<int>& preo, vector<int>& ino, int &   i,int s, int e){
      if(preo.size()==0)
      return NULL;
 
@@ -37,6 +37,8 @@ public:
      root->right = generateTree(preo,ino,i,k+1,e);
      return root;
     }
+
+    
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         int i=0;
         return generateTree(preorder,inorder,i,0,inorder.size()-1);

@@ -1,39 +1,96 @@
+//{ Driver Code Starts
 #include<bits/stdc++.h>
-void make(unordered_map<int,set<int>> &adj, vector<vector<int>> &edges){
-  for(int i = 0;i<edges.size();i++){
-    int u = edges[i][0];
-    int v = edges[i][1];
+using namespace std;
 
-    adj[u].insert(v);
-  }
-}
-void solve(unordered_map<int, set<int>> &adj,unordered_map<int,bool> &visited,stack<int> &ans, int node){
-    visited[node] = 1;
-
-    for(auto i : adj[node]){
-        if(!visited[i]){
-            solve(adj, visited,ans, i);
+// } Driver Code Ends
+class Solution
+{
+	public:
+	//Function to find number of strongly connected components in the graph.
+	void topologicalSort(vector<vector<int>> &adj, int node,vector<int> &visited, stack<int> &store){
+	    visited[node] = 1;
+	    for(int ch: adj[node]){
+	        if(!visited[ch]){
+	            topologicalSort(adj, ch, visited, store);
+	        }
+	    }
+	    store.push(node);
+	}
+	void dfs(vector<vector<int>>& adj, int node, vector<int> &vr){
+	    vr[node] = 1;
+	    
+	    for(auto ch: adj[node]){
+	        if(!vr[ch]){
+	            dfs(adj, ch, vr);
+	        }
+	    }
+	}
+    int kosaraju(int V, vector<vector<int>>& adj)
+    {
+        // first find the topologincal sort
+        vector<int> visited(V,0);
+        stack<int> sort;
+        //create graph
+        for(int i = 0;i<V;i++){
+            if(!visited[i])
+            topologicalSort(adj, i,visited, sort);
         }
-    }
-        ans.push(node);
-}
-vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
-    unordered_map<int, set<int>> adj;
-
-    make(adj, edges);
-
-    unordered_map<int,bool> visited;
-    stack<int> ans;
-
-    for(int i = 0;i<v;i++){
-        if(!visited[i]){
-            solve(adj, visited,ans, i);
+        vector<int> topo;
+        while(!sort.empty())
+        {
+            topo.push_back(sort.top());
+            sort.pop();
         }
+        // reverse the adj
+        vector<vector<int>> adjRev(V);
+        for(int i = 0;i<V;i++){
+            for(auto ch: adj[i]){
+                adjRev[ch].push_back(i);
+            }
+        }
+        // with help of dfs find the ssc
+        vector<int> vr(V+2,0);
+        int count = 0;
+        for(auto i: topo){
+            // cout<<i<<" ";
+            if(!vr[i]){
+                dfs(adjRev, i, vr);
+                count++;
+            }
+        }
+        return count;
+        //code here
     }
-    vector<int> re;
-    while(ans.size()){
-        re.push_back(ans.top());
-        ans.pop();
+};
+
+//{ Driver Code Starts.
+
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+
+    	vector<vector<int>> adj(V);
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.kosaraju(V, adj) << "\n";
     }
-    return re;
+
+    return 0;
 }
+
+
+// } Driver Code Ends
