@@ -16,7 +16,7 @@ class A{
     // it should be defined outside the class we can define in side we should not
     friend void canprint(A);
 };
-
+// don't need to declare friend function
 void canprint(A c)
 {
     cout<<c.a<<" "<<c.b<<endl;
@@ -29,3 +29,4 @@ int main(){
     canprint(a);
     return 0;
 }
+

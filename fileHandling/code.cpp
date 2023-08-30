@@ -1,11 +1,14 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <fstream>
 using namespace std;
 
-
-int main(){
+int main()
+{
     ofstream fout;
     fout.open("test.txt");
-    fout<<"hello";
+    fout << "hello";
+
     fout.close();
+
     return 0;
 }

@@ -14,7 +14,9 @@ using namespace std;
 #define per(i, a, b) for(int i = (b)-1; i >= (a); --i)
 #define INF 1e9
 #define MOD 1000000007
-
+class A{
+    int a;
+};
 int main() {
     // Your code here
     char a;
@@ -30,6 +32,6 @@ int main() {
         default:
             cout<<"Default"<<endl;
     }
-
+    cout<<sizeof(A)<<endl;
     return 0;
 }

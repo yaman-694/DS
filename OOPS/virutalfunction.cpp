@@ -7,7 +7,7 @@ class A {
 };
 class B: public A{
     public:
-    void f1() {
+    void f1() override {
         cout<<"derived";
     } // overrding
 };
