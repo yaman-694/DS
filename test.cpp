@@ -30,14 +30,11 @@ void find(int *p){
 }
 int main() 
 { 
-    // int a = 10;
-    // int *p = &a;
-    // int *p1 = const_cast<int*>(p);
-    // find(p1);
-    // cout<<a<<endl;
-    vector<int> a = {1,3,4,5,5,6};
-    int index = upper_bound(a.begin(), a.end(), 5)-a.begin();
-    cout<<index<<endl;
+    time_t t1;
+    time_t t2;
+    t1 = time(NULL);
+    t2 = time(NULL);
+    cout<<timed
 
     return 0; 
 } 
