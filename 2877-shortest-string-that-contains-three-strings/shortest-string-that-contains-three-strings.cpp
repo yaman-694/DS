@@ -1,10 +1,5 @@
 class Solution {
 public:
-    struct comp{
-        bool operator()(string a, string b){
-            return a.size() < b.size()||a[0]<b[0];
-        }
-    };
     bool overLap(string a, string b, int start1, int start2, int len){
         return a.substr(start1,len) == b.substr(start2, len);
     }
@@ -27,6 +22,7 @@ public:
         return concatenate(concatenate(a, b), c);
     }
     string minimumString(string a, string b, string c) {
+        // not able to use lamda functon in vector
         vector<string> all = {
             conc(a, b, c),
             conc(a, c, b), 
