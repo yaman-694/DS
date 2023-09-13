@@ -26,25 +26,22 @@ public:
             nodes[equations[i][0]]=1;
         }
 
-        for(auto i: adj){
-            cout<<i.first<<" ->";
-            for(auto j: i.second){
-                cout<<j.first<<" "<<j.second<<endl;
-            }
-        }
-
+        
         vector<double> ans;
 
         for(auto query: queries){
             map<string,bool> visited;
-            if(nodes[query[0]]&&nodes[query[1]]) {
+            if(adj.count(query[0])==0&&adj.count(query[1])==0) {
+                
+                ans.push_back(-1);
+            } else {
                 yes=0;
                 double anss = solve(adj, query[0],query[1],visited);
                 if(!yes)
                 anss=-1;
                 ans.push_back(anss);
                 // cout<<endl;
-            } else ans.push_back(-1);
+                }
         }
         return ans;
     }
