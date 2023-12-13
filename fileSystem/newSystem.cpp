@@ -70,7 +70,6 @@ class Directory: public FileSystemObject {
     }
     void getParent();
     void deleteDirectory();
-    void deleteFile(FileSystemObject*);
 };
 
 class TimeStamps {
@@ -79,18 +78,50 @@ class TimeStamps {
     time_t updatedAt;
     TimeStamps(){
         createdAt = time(NULL);
+        cout<<createdAt<<endl;
         updatedAt = time(NULL);
     }
 };
 class CommitNode;
+class Branch;
+class BranchOperation;
 class VersionControl {
-    public:
+    protected:
     static int id;
     static map<int, CommitNode*> commitMap;
     static vector<CommitNode*> commits;
-    virtual void commit(Directory* root)=0;
-    virtual Directory* switchCommit(int)=0;
+    static map<string, Branch*> branches;
+    public:
+    Branch* currentBranch;
+    VersionControl(){
+        currentBranch=NULL;
+    }
+
+    void initialize(string name);
+    void initialize();
+    virtual void commit(Directory* root){}
     void listCommits();
+    static Directory* switchCommit(int id);
+    virtual Branch* createBranch(string name){}
+    virtual void listBranch(){}
+    virtual Branch* switchBranch(string name){}
+};
+
+class Branch {
+    public:
+    string name;
+    map<int, CommitNode*> commits;
+    CommitNode* start;
+    CommitNode* head;
+    CommitNode* end;
+    private:
+    Branch(string name){
+        this->name = name;
+        start = NULL;
+        head = NULL;
+        end = NULL;
+    }
+    friend class BranchOperation;
 };
 class CommitNode : public VersionControl{
     private:
@@ -99,17 +130,49 @@ class CommitNode : public VersionControl{
     Directory *root;
     int id;
     TimeStamps time;
-    CommitNode(){
+    Branch* branch;
+    CommitNode(Branch* branch){
         VersionControl::id = VersionControl::id+1;
+        this->branch = branch;
+        branch->start = this;
     }
     void commit(Directory*);
-    Directory* switchCommit(int);
+};
+
+class BranchOperation: public VersionControl {
+    public:
+    void listBranch(){
+        for(auto branch: branches){
+            cout<<"Branch Name: "<<branch.first<<endl;
+        }
+    }
+    Branch* createBranch(string name);
+    Branch* switchBranch(string name){
+        if(branches.find(name)!=branches.end()) {
+            currentBranch = branches[name];
+            return currentBranch;
+        }
+        return currentBranch;
+    }
 };
 // static
 int VersionControl::id=100;
 vector<CommitNode*> VersionControl::commits;
 map<int, CommitNode*> VersionControl::commitMap;
+map<string, Branch*> VersionControl::branches;
 //version Control
+void VersionControl::initialize(string name) {
+    BranchOperation* mainBranch = new BranchOperation();
+    currentBranch = mainBranch->createBranch(name);
+    branches[name] = currentBranch;
+}
+void VersionControl::initialize() {
+    string name = "Master";
+    BranchOperation* mainBranch = new BranchOperation();
+    currentBranch = mainBranch->createBranch(name);
+    cout<<currentBranch->name<<endl;
+    branches[name] = currentBranch;
+}
 void VersionControl::listCommits() {
     for(CommitNode* commit: commits){
         cout<<"Commit Id:"<<commit->id<<endl;
@@ -128,7 +191,15 @@ void VersionControl::listCommits() {
         }
     }
 }
-
+// branch
+Branch* BranchOperation::createBranch(string name){
+    if(branches.find(name)!=branches.end()) {
+        return branches[name];
+    }
+    Branch* branch = new Branch(name);
+    branches[name] = branch;
+    return branch;
+}
 // CommitNode
 
 Directory* CommitNode::createDeepCopyOfFile(Directory* root) {
@@ -137,7 +208,7 @@ Directory* CommitNode::createDeepCopyOfFile(Directory* root) {
         if(content->type=="File") {
             File* copyFile = new File((File*)content);
             copyRoot->contents.push_back(copyFile);
-        } else {
+        } else if(content->type=="Directory"){
             Directory* copyDir = createDeepCopyOfFile((Directory*)content);
             copyRoot->contents.push_back(copyDir);
         }
@@ -149,14 +220,14 @@ void CommitNode::commit(Directory* root) {
     this->root = createDeepCopyOfFile(root);
     id = VersionControl::id;
     commits.emplace_back(this);
+    branch->commits[id] = this;
+    branch->head = this;
+    branch->end = this;
     commitMap[id]=this;
-    for(auto i: commitMap){
-        cout<<"ID in map: "<<i.first<<endl;
-    }
-    cout<<"Success Commit"<<endl;
+    cout<<"Success Commit id: "<<id<<endl;
 }
 
-Directory* CommitNode::switchCommit(int id) {
+Directory* VersionControl::switchCommit(int id) {
     return commitMap[id]->root;
 }
 
@@ -224,9 +295,6 @@ void Directory::deleteDirectory() {
     delete this;
 }
 
-void Directory::deleteFile(FileSystemObject* item) {
-    return;
-}
 
 int main() {
     Directory* root = new Directory("Root");
@@ -235,18 +303,38 @@ int main() {
         files.push_back(new File("File"+to_string(i+1),"new Content"));
         root->add(files[i]);
     }
-    CommitNode *Commit1 = new CommitNode();
-    Commit1->commit(root);
-    Directory* dir1 = new Directory("Dir1");
-    root->add(dir1);
-    files[0]->move(dir1);
-    root->ls();
-    CommitNode *Commit2 = new CommitNode();
-    Commit2->commit(root);
-    root = Commit2->switchCommit(101);
-    root->ls();
-    root = Commit2->switchCommit(102);
-    root->ls();
+    VersionControl *vs = new VersionControl();
+    vs->initialize();
     
+    
+    // cout<<vs->currentBranch->name;
+    // VersionControl *Branch1 = new BranchOperation();
+    // Branch* currentBranch = Branch1->createBranch("main");
+    // VersionControl *commit1 = new CommitNode(currentBranch);
+    // commit1->commit(root);
+    // Directory* dir1 = new Directory("Dir1");
+    // root->add(dir1);
+    // files[0]->move(dir1);
+    // root->ls();
+    VersionControl *commit2 = new CommitNode(vs->currentBranch);
+    commit2->commit(root);
+    // root->ls();
+    // // root = VersionControl::switchCommit(101);
+    // root->ls();
+    // VersionControl* branch2 = new BranchOperation();
+    // currentBranch = branch2->createBranch("bugFix");
+    // Directory* dir2 = new Directory("Dir2");
+    // Directory* dir3 = new Directory("Dir3");
+    // Directory* dir4 = new Directory("Dir4");
+    // root->add(dir2);
+    // root->add(dir3);
+    // root->add(dir4);
+    // files[1]->move(dir2);
+    // VersionControl* commit3 = new CommitNode(currentBranch);
+    // cout<<"Branch Created"<<endl;
+    // root->ls();
+    // commit3->commit(root);
+    // root->ls();
+    // branch2->listBranch();
     return 0;
 }

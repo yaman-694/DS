@@ -28,19 +28,6 @@ class A{
 //         ob->a();
 //     }
 // };
-void score (int a[], int b[], int *res){
-    int n = sizeof(a)/sizeof(int);
-    int arun = 0;
-    int binny = 0;
-
-    for(int i = 0;i<=n;i++){
-        if(a[i]>b[i]){
-            arun++;
-        } else binny++;
-    }
-    res[0] = arun;
-    res[1] = binny;
-}
 int main() {
     // C *obj = new C();
     // C *obj2 = new C();
@@ -54,7 +41,8 @@ int main() {
     // cout<<arr.at(6);
     // if(ptr==NULL) cout<<1<<endl;
 
-    A obj = 3;
-    cout<<obj.a;
+    A *obj = new A(3);
+    cout<<obj->a;
+
     return 0;
 }

@@ -30,7 +30,7 @@ public:
             }
             else if(root->left == NULL and root->right != NULL){
                 return root->right;
-            } 
+            }
             else if(root->left!=NULL and root->right == NULL) {
                 return root->left;
             }

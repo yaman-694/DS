@@ -1,40 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
+int fucn(vector<int> errorscrore, int compP, int compQ) {
+    int n = errorscrore.size();
+    sort(errorscore.begin(), errorscore.end(), greater<int>());
+    int noofprojects = 0, innercount = 0, innercountdummy;
 
-#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-#define ll long long
-#define vi vector<int>
-#define vl vector<ll>
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define pb push_back
-#define mp make_pair
-#define all(x) (x).begin(), (x).end()
-#define rep(i, a, b) for(int i = (a); i < (b); ++i)
-#define per(i, a, b) for(int i = (b)-1; i >= (a); --i)
-#define INF 1e9
-#define MOD 1000000007
-
-int tw(int a){
-    int count = 0;
-    int i =0;
-    while(i<32){
-        if(a&(1<<i)){
-            count++;
-            if(count==2) {
-                return 1;
+    for (int i = 0; i < n; i++)
+    {
+        // reduction of individual scores
+        while (errorscore[i] != 0 && errorscore[i] > (n - 1 - i) * compQ && errorscore[i] >= compP)
+        {
+            errorscore[i] -= compP;
+            innercount++;
+            noofprojects++;
+        }
+        // reduction of compQ scores
+        for (int k = 0; k < n; k++)
+        {
+            if (k != i)
+            {
+                innercountdummy = innercount;
+                while (innercountdummy != 0)
+                {
+                    if (errorscore[k] != 0 && errorscore[k] > 0)
+                    {
+                        errorscore[k] -= compQ;
+                    }
+                    innercountdummy--;
+                }
             }
         }
-        i++;
+        innercount = 0;
     }
-    return 0;
+    for (int k = 0; k < n; k++)
+    {
+        if (errorscore[k] > 0)
+            noofprojects++;
+    }
+    return noofprojects;
 }
-int main() {
-    int a = 143949345;
+int main()
+{
+    int n, to, all;
+    vector<int> errorscore;
+    cout << "Enter the number of empolyee:";
+    cin >> n;
+    cout << "\nenter error score of each of the employee";
+    for (int i = 0; i < n; i++)
+        cin >> errorscore[i];
+    cout << "\nEnter the score deduction for individual";
+    cin >> to;
+    cout << "\nEnter score deduction for all\n";
+    cin >> all;
 
-    while(tw(a)){
-        a++;
-    }
-    cout<<a;
-    return 0;
+     // checking if any projects are left out (by this time it will be less that individual deductions)
+
+    cout << "\nMin no of projects=" << noofprojects;
 }

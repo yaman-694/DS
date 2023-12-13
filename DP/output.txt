@@ -1,11 +1,6 @@
-YES
-YES
-NO
-NO
-YES
-YES
-NO
-YES
-YES
-NO
-NO
+13
+23
+33
+43
+53
+4

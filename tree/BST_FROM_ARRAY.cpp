@@ -24,7 +24,6 @@ public:
     }
     TreeNode* sortedArrayToBST(vector<int>& nums) {
         TreeNode* root = newTree(nums,0,nums.size()-1);
-
         return root;
     }
 };
